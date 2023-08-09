@@ -5,6 +5,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from distribution.models import Distribution
 
 
+class IndexView(ListView):
+    model = Distribution
+
+
 class DistributionListView(ListView):
     model = Distribution
 
