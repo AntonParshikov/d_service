@@ -3,14 +3,49 @@ import string
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
 
 from users.forms import UsersRegisterForm, UsersForm
 from users.models import Users
+
+
+class UsersListView(ListView):
+    model = Users
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Users.objects.filter(Q(first_name__icontains=query) | Q(email__icontains=query))
+        else:
+            return Users.objects.all()
+
+
+class UserDetailView(DetailView):
+    model = Users
+    template_name = 'users/users_detail.html'
+    context_object_name = 'users'
+
+
+class UsersCreateView(CreateView):
+    model = Users
+    fields = ('first_name', 'last_name', 'email', 'avatar', 'comment')
+    success_url = reverse_lazy('users:users_list')
+
+
+class UsersUpdateView(UpdateView):
+    model = Users
+    fields = ('first_name', 'last_name', 'email', 'avatar', 'comment',)
+    success_url = reverse_lazy('users:users_list')
+
+
+class UsersDeleteView(DeleteView):
+    model = Users
+    success_url = reverse_lazy('users:users_list')
 
 
 class LoginView(BaseLoginView):
