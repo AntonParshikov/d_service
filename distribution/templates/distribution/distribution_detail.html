@@ -1,5 +1,18 @@
 {% extends 'distribution/base.html' %}
 
-{% block content%}
-
+{% block content %}
+{% load static %}
+{% load distribution_tags %}
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ distribution.avatar|distribution_media }}" class="w-100" alt="" height="300">
+        <h5 class="mt-0 text-white">{{object.time}}</h5>
+        <h5 class="mt-0 text-white">{{object.frequency}}</h5>
+        <h5 class="mt-0 text-white">{{object.status}}</h5>
+        <h5 class="mt-0 text-white mb-4">{{object.message}}</h5>
+        <a href="{% url 'distribution:update_distribution' object.pk %}" class="btn btn-outline-success">Обновить
+            информацию</a>
+        <a href="{% url 'distribution:distribution_list' %}" class="btn btn-dark">Назад</a>
+    </div>
+</div>
 {% endblock %}

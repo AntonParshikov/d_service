@@ -6,8 +6,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Message(models.Model):
-    subject = models.CharField(max_length=255, verbose_name='Тема письма')
-    body = models.TextField(**NULLABLE, verbose_name='Тело письма')
+    subject = models.CharField(max_length=255, verbose_name='Тема сообщения')
+    body = models.TextField(**NULLABLE, verbose_name='Текст сообщения')
 
     def __str__(self):
         return f'{self.subject}: {self.body}'
@@ -38,7 +38,7 @@ class Distribution(models.Model):
         (status_completed, 'completed')
     )
 
-    time = models.DateTimeField(auto_now_add=True, verbose_name='Отправка')
+    time = models.TimeField(verbose_name='Время отправки')
     frequency = models.CharField(max_length=50, choices=sending_frequency, default=sending_frequency_daily,
                                  verbose_name='Период рассылки')
     status = models.CharField(max_length=50, choices=statuses, default=status_created, verbose_name='Статус рассылки')

@@ -31,15 +31,9 @@ class UserDetailView(DetailView):
     context_object_name = 'users'
 
 
-class UsersCreateView(CreateView):
-    model = Users
-    fields = ('first_name', 'last_name', 'email', 'avatar', 'comment')
-    success_url = reverse_lazy('users:users_list')
-
-
 class UsersUpdateView(UpdateView):
     model = Users
-    fields = ('first_name', 'last_name', 'email', 'avatar', 'comment',)
+    form_class = UsersForm
     success_url = reverse_lazy('users:users_list')
 
 
