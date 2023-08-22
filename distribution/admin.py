@@ -1,9 +1,16 @@
 from django.contrib import admin
-from distribution.models import Distribution
+from distribution.models import Distribution, DistributionClient
 
 
 @admin.register(Distribution)
 class DistributionAdmin(admin.ModelAdmin):
-    list_display = ('time', 'frequency', 'status', 'message', )
-    list_filter = ('status', )
-    search_fields = ('time', 'frequency', 'status',)
+    list_display = ('start_time', 'end_time', 'frequency', 'status', 'message')
+    list_filter = ('status',)
+    search_fields = ('frequency', 'status',)
+
+
+@admin.register(DistributionClient)
+class DistributionClientAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'email')
+    list_filter = ('email', 'first_name')
+    search_fields = ('email',)

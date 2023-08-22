@@ -18,13 +18,16 @@
                 <img src="{{ object.avatar|distribution_media }}" class="w-100" alt="{{distribution}}">
             </div>
             <div class="col-md-6 p-4 ps-md-0">
-                <h5 class="mt-0 text-white">{{object.time}}</h5>
-                <strong class="d-block text-warning">{{object.frequency}}</strong>
-                <h5 class="mt-0 text-success">{{object.status}}</h5>
-                <h5 class="mt-0 text-white">{{object.message}}</h5>
+                <h5 class="mt-0 text-secondary">Рассылка №: {{object.id}}</h5>
+                <h5 class="mt-0 text-white">Время начала рассылки: {{object.start_time}}</h5>
+                <h5 class="mt-0 text-white">Время окончания рассылки: {{object.end_time}}</h5>
+                <h5 class="d-block text-warning">Переодичность отправки сообщения: {{object.frequency}}</h5>
+                <h5 class="d-block text-danger">Клиенты рассылки: {{object.distribution_client}}</h5>
+                <h5 class="mt-0 text-success">Статус: {{object.status}}</h5>
+                <h5 class="mt-0 text-white">Сообщение: {{object.message}}</h5>
                 <div class="btn-group-small mb-5">
                     <a href="{% url 'distribution:distribution_detail' object.pk %}"
-                       class="btn btn-outline-secondary active"
+                       class="btn btn-outline-primary"
                        aria-current="page">Информация</a>
                     <a href="{% url 'distribution:update_distribution' object.pk %}" class="btn btn-outline-success">Обновить</a>
                     <a href="{% url 'distribution:distribution_confirm_delete' object.pk %}"
@@ -37,5 +40,3 @@
     </div>
 </div>
 {% endblock %}
-
-

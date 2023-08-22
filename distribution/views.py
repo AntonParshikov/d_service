@@ -1,11 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django import forms
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from distribution.forms import DistributionForm, MessageForm
+from distribution.forms import DistributionForm, MessageForm, DistributionClientForm
 from distribution.models import Distribution, Message, DistributionClient
-from users.models import Users
 
 
 class DistributionListView(ListView):
@@ -46,31 +42,32 @@ class MessageDeleteView(DeleteView):
     success_url = reverse_lazy('distribution:distribution_detail')
 
 
-# class DistributionUserListView(ListView):
-#     model = DistributionClient
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context_data = super().get_context_data(*args, **kwargs)
-#
-#         context_data['user'] = Users.objects.all()
-#         context_data['distribution_pk'] = self.kwargs.get('pk')
-#
-#         return context_data
-#
-#
-# def toogle_user(request, pk, user_pk):
-#     if DistributionClient.objects.filter(
-#         user_id=user_pk,
-#         distribution_settings_id=pk
-#     ).exists():
-#         DistributionClient.objects.filter(
-#             user_id=user_pk,
-#             distribution_settings_id=pk
-#         ).delete()
-#
-#     else:
-#         DistributionClient.objects.create(
-#             user_id=user_pk,
-#             distribution_settings_id=pk
-#         ).delete()
-#     return redirect(reverse('distribution:distributionclient_list', args=[pk]))
+class DistributionClientListView(ListView):
+    model = DistributionClient
+    template_name = 'distribution/distribution_client_list.html'
+    context_object_name = 'client'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['client_list'] = self.get_queryset()
+        return context_data
+
+
+class DistributionClientCreateView(CreateView):
+    model = DistributionClient
+    template_name = 'distribution/distribution_client_form.html'
+    form_class = DistributionClientForm
+    success_url = reverse_lazy('distribution:distribution_client_list')
+
+
+class DistributionClientUpdateView(UpdateView):
+    model = DistributionClient
+    template_name = 'distribution/distribution_client_form.html'
+    form_class = DistributionClientForm
+    success_url = reverse_lazy('distribution:distribution_client_list')
+
+
+class DistributionClientDeleteView(DeleteView):
+    model = DistributionClient
+    template_name = 'distribution/distribution_client_confirm_delete.html'
+    success_url = reverse_lazy('distribution:distribution_client_list')
