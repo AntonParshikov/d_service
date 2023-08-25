@@ -11,8 +11,13 @@
         <h5 class="d-block text-warning">Переодичность отправки сообщения: {{object.frequency}}</h5>
         <h5 class="mt-0 text-success">Статус: {{object.status}}</h5>
         <h5 class="mt-0 text-white mb-3">Сообщение: {{object.message}}</h5>
+        {% if perms.distribution.change_distribution %}
         <a href="{% url 'distribution:update_distribution' object.pk %}" class="btn btn-outline-success">Обновить
             информацию</a>
+        {% endif %}
+<!--        {% if perms.distribution.delete_message %}-->
+<!--        <a href="{% url 'distribution:delete_message' object.pk %}" class="btn btn-outline-danger">Удалить сообщение</a>-->
+<!--        {% endif %}-->
         <a href="{% url 'distribution:distribution_list' %}" class="btn btn-dark">Назад</a>
     </div>
 </div>

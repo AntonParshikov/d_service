@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'distribution.apps.DistributionConfig',
     'distribution_log.apps.DistributionLogConfig',
+    'blog.apps.BlogConfig',
 
 ]
 
@@ -81,6 +85,8 @@ DATABASES = {
         'NAME': 'service',
         'USER': 'postgres',
         'PASSWORD': '324214Kross!'
+        # 'USER': os.getenv('DB_USER'),
+        # 'PASSWORD': os.getenv('DB_PASSWORD!')
     }
 }
 
@@ -134,18 +140,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.Users'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TSL = True
-EMAIL_HOST_USER = 'testovnet676@bk.ru '
-EMAIL_HOST_PASSWORD = 'uc3v0qxknn8QqD3EB7cz'
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
+EMAIL_HOST_USER='testovnet676@bk.ru'
+EMAIL_HOST_PASSWORD='uc3v0qxknn8QqD3EB7cz'
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

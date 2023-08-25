@@ -28,6 +28,9 @@
             background-size: cover;
             background-color: rgba(0);
             }
+        .auto__table td {
+    background-color: transparent;
+}
     </style>
 
 </head>
@@ -46,7 +49,11 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page"
-                           href="{% url 'distribution:distribution_list' %}">Главная</a>
+                           href="{% url 'blog:list' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                           href="{% url 'distribution:distribution_list' %}">Рассылки</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:users_list' %}">Пользователи</a>
@@ -58,11 +65,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Контакты</a></li>
+                            <li><a class="dropdown-item" href="{% url 'blog:list' %}">К Блогам</a></li>
                             <li><a class="dropdown-item" href="{% url 'distribution:distribution_client_list'%}">Клиенты
                                 рассылки</a></li>
                             {% if user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
-                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выход</a></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'users:logout' %}">Выход</a></li>
                             {% else %}
                             <li><a class="dropdown-item" href="{% url 'users:login' %}">Вход</a></li>
                             <li><a class="dropdown-item" href="{% url 'users:register' %}">Регистрация</a></li>
@@ -71,7 +79,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item active mr-2">
-                        <img src="{{ users.avatar|my_media }}" alt="Avatar" width="40" height="40">
+                        <img src="{{ object.avatar|my_media }}" alt="Avatar" width="40" height="40">
                     </li>
                     <li class="nav-item active">
                         <a class="text-warning" href="{% url 'users:profile' %}">{{ user.email }}</a>

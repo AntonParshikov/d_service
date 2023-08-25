@@ -3,11 +3,9 @@ from users.models import NULLABLE
 
 
 class DistributionClient(models.Model):
-    # Переделать модель клиентов рассылки, указать связь с моделью рассылки ManyToMany.
-    # Написать команды для рассылки в commands через  https://schedule.readthedocs.io/en/stable/
     first_name = models.CharField(max_length=100, **NULLABLE, verbose_name='Имя')
     last_name = models.CharField(max_length=100, **NULLABLE, verbose_name='Фамилия')
-    email = models.EmailField(max_length=250, unique=True, **NULLABLE, verbose_name='Адрес электронной почты')
+    email = models.EmailField(max_length=250, **NULLABLE, unique=True, verbose_name='Адрес электронной почты')
     comment = models.TextField(**NULLABLE, verbose_name='Комментарий')
 
     def __str__(self):
@@ -51,13 +49,16 @@ class Distribution(models.Model):
         (status_completed, 'completed')
     )
 
-    start_time = models.TimeField(**NULLABLE, verbose_name='Время начала рассылки')
-    end_time = models.TimeField(**NULLABLE, verbose_name='Время начала рассылки')
+    start_time = models.DateField(**NULLABLE, verbose_name='Время начала рассылки')
+    end_time = models.DateField(**NULLABLE, verbose_name='Время окончания рассылки')
     frequency = models.CharField(max_length=50, choices=sending_frequency, default=sending_frequency_daily,
                                  verbose_name='Период рассылки')
     status = models.CharField(max_length=50, choices=statuses, default=status_created, verbose_name='Статус рассылки')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE, verbose_name='Сообщение')
     distribution_client = models.ManyToManyField(DistributionClient, verbose_name='Клиент рассылки')
+    datetime = models.DateField(auto_now_add=True, **NULLABLE, verbose_name='дата и время попытки')
+    attempt = models.BooleanField(default=False, verbose_name='статус попытки')
+    feedback = models.TextField(verbose_name='ответ сервера', **NULLABLE)
 
     def __str__(self):
         return f'{self.frequency} - {self.start_time}'
