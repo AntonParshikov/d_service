@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from users.apps import UsersConfig
 from users.views import LoginView, LogoutView, RegisterView, UserUpdateView, generate_password, UsersListView, \
@@ -7,7 +8,7 @@ from users.views import LoginView, LogoutView, RegisterView, UserUpdateView, gen
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path('users/', UsersListView.as_view(), name='users_list'),
+    path('users/', cache_page(60)(UsersListView.as_view()), name='users_list'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='users_detail'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
