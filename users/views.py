@@ -55,11 +55,10 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
 
-class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = Users
     success_url = reverse_lazy('users:users_list')
     form_class = UsersForm
-    permission_required = 'users.change_users'
 
     def get_object(self, queryset=None):
         return self.request.user
