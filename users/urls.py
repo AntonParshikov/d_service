@@ -8,7 +8,7 @@ from users.views import LoginView, LogoutView, RegisterView, UserUpdateView, gen
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path('users/', cache_page(60)(UsersListView.as_view()), name='users_list'),
+    path('users/', UsersListView.as_view(), name='users_list'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='users_detail'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

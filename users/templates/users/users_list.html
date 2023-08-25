@@ -22,8 +22,10 @@
                 <h5 class="mt-0 text-warning">Email: {{object.email}}</h5>
                 <h5 class="mt-0 text-primary mb-4">Описание: {{object.comment}}</h5>
                 <div class="btn-group-small mb-5">
+                    {% if perms.users.change_users %}
                     <a href="{% url 'users:users_detail' object.pk %}" class="btn btn-outline-secondary active"
                        aria-current="page">Профиль</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
