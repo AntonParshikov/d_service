@@ -13,13 +13,13 @@ class StyleFormMixin:
 class UsersRegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = Users
-        fields = ('email', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'avatar', 'email', 'password1', 'password2')
 
 
 class UsersForm(StyleFormMixin, UserChangeForm):
     class Meta:
         model = Users
-        fields = ('email', 'password', 'first_name', 'last_name', 'avatar', 'comment')
+        fields = ('email', 'password', 'avatar', 'first_name', 'last_name', 'comment')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

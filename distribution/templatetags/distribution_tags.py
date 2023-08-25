@@ -4,8 +4,8 @@ register = template.Library()
 
 
 @register.filter()
-def my_media(val):
+def distribution_media(val):
     if val:
         return f'/media/{val}'
 
-    return '/media/users/1234.jpg'
+    return '/media/distribution/Рассылка.jpg'
